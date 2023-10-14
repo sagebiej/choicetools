@@ -1,0 +1,10 @@
+Package: choiceTools
+Type: Package
+Title: Various tools to work with choice experiment data in R
+Version: 0.1.0
+Author: Julian Sagebiel
+Maintainer: Julian Sagebiel <yourself@somewhere.net>
+Description: Most functions are made for use with apollo.
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
