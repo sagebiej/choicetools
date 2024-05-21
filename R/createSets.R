@@ -1,3 +1,30 @@
+#' Create sets from given data
+#'
+#' This function creates sets based on given attributes and choice columns.
+#' It groups data by unique rows, calculates counts, and pivots the data for a
+#' comprehensive overview.
+#'
+#' @param .data A data frame or tibble containing the data.
+#' @param choice A string specifying the choice column.
+#' @param attributes A selection condition for attribute columns (tidyselect compatible).
+#' @param uniquerow A string specifying the unique row identifier column.
+#' @param prefix A string specifying the prefix for renaming (default is "a").
+#' @param delimiter A string specifying the delimiter for renaming (default is "_").
+#'
+#' @return A list of tibbles representing the sets.
+#'
+#' @export
+#'
+#' @examples
+#' # Given a package dataset 'sample_data':
+#' createSets(sample_data, choice = "choice_col", attributes = starts_with("attr"), uniquerow = "id")
+
+
+
+
+
+
+
 createSets <- function(.data, choice, attributes , uniquerow, prefix="a") {
   require("dplyr")
   require("tidyr")
