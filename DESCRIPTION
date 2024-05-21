@@ -1,16 +1,31 @@
 Package: choiceTools
 Type: Package
 Title: Various tools to work with choice experiment data in R
-Version: 0.1.0
+Version: 0.2.0
 Author: Julian Sagebiel
 Maintainer: Julian Sagebiel <julian.sagebiel@idiv.de>
-Description: Most functions are made for use with apollo.
-License: MIT
+Description: This is a random set of functions that make your life as a choice modeller easier. Some functions are made for use with apollo so that you can more easily do choice modelling in apollo. The package includes some tests like Poetest and zTest and some functions to generate publication-ready tables.
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Imports: 
-    texreg
+    apollo,
+    dplyr,
+    janitor,
+    magrittr,
+    methods,
+    purrr,
+    readxl,
+    rlang,
+    stats,
+    texreg,
+    tidyr,
+    tidyselect,
+    zoo
+RoxygenNote: 7.3.1
+Config/testthat/edition: 3

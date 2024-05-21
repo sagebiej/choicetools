@@ -9,7 +9,7 @@ wtp_lc <-function(modelname) {
 
 
     clet <- intToUtf8(96+class)
-    coefs<- data.frame(apollo_modelOutput(modelname, modelOutput_settings = list(printPVal=T)))
+    coefs<- data.frame(apollo::apollo_modelOutput(modelname, modelOutput_settings = list(printPVal=T)))
     coefs<- coefs[grep(paste0("delta_.*", clet,"$"),x = rownames(coefs), value=TRUE, perl = TRUE), c(1,5:7)]
 
 
