@@ -44,10 +44,12 @@ createSets <- function(.data, choice, attributes , uniquerow, prefix="a") {
     stop("The columns choice, uniquerow, and attributes should not have missing values.")
   }
 
+
+
   sets <- .data %>%
     dplyr::select({{ attributes }}, {{ choice }}, {{ uniquerow }} ) %>%
     dplyr::group_by(!!rlang::sym(uniquerow), !!rlang::sym(choice)) %>%
-    dplyr::add_count() %>% dplyr::ungroup %>%
+    dplyr::add_count() %>% dplyr::ungroup() %>%
     dplyr::group_by(!!rlang::sym(uniquerow)) %>%
     dplyr::distinct(n, .keep_all=TRUE) %>%
     dplyr::mutate(perc = round((n / sum(n) * 100))) %>%
