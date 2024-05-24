@@ -9,15 +9,14 @@
 #' @param attributes A selection condition for attribute columns (tidyselect compatible).
 #' @param uniquerow A string specifying the unique row identifier column.
 #' @param prefix A string specifying the prefix for renaming (default is "a").
-#' @param delimiter A string specifying the delimiter for renaming (default is "_").
 #'
 #' @return A list of tibbles representing the sets.
 #'
 #' @export
 #'
-#' @examples
+#' @examples \dontrun{
 #' # Given a package dataset 'sample_data':
-#' createSets(sample_data, choice = "choice_col", attributes = starts_with("attr"), uniquerow = "id")
+#' createSets(sample_data, choice = "choice_col", attributes = starts_with("attr"), uniquerow = "id") }
 
 
 
@@ -26,9 +25,9 @@
 
 
 createSets <- function(.data, choice, attributes , uniquerow, prefix="a") {
-  require("dplyr")
-  require("tidyr")
-  require("purrr")
+  # require("dplyr")
+  # require("tidyr")
+  # require("purrr")
 
   if (!is.data.frame(.data)) {
     stop("The input data (.data) must be a data frame or tibble.")
@@ -36,7 +35,7 @@ createSets <- function(.data, choice, attributes , uniquerow, prefix="a") {
   if (!all(c(choice, uniquerow) %in% names(.data))) {
     stop("Both choice and uniquerow columns must exist in the input data.")
   }
-  attribute_cols <- select(.data, {{ attributes }}) %>% names()
+  attribute_cols <- dplyr::select(.data, {{ attributes }}) %>% names()
   if (length(setdiff(attribute_cols, names(.data))) > 0) {
     stop("Some columns specified in attributes do not exist in the input data.")
   }
@@ -45,16 +44,18 @@ createSets <- function(.data, choice, attributes , uniquerow, prefix="a") {
     stop("The columns choice, uniquerow, and attributes should not have missing values.")
   }
 
+
+
   sets <- .data %>%
-    select({{ attributes }}, {{ choice }}, {{ uniquerow }} ) %>%
-    group_by(!!rlang::sym(uniquerow), !!rlang::sym(choice)) %>%
-    add_count() %>% ungroup %>%
-    group_by(!!rlang::sym(uniquerow)) %>%
-    distinct(n, .keep_all=TRUE) %>%
-    mutate(perc = round((n / sum(n) * 100))) %>%
-    arrange({{ uniquerow }}, {{ choice }}) %>%
-    group_split() %>%
-    set_names(map(., ~ unique(as.character(.x[[rlang::as_string(uniquerow)]]))))
+    dplyr::select({{ attributes }}, {{ choice }}, {{ uniquerow }} ) %>%
+    dplyr::group_by(!!rlang::sym(uniquerow), !!rlang::sym(choice)) %>%
+    dplyr::add_count() %>% dplyr::ungroup() %>%
+    dplyr::group_by(!!rlang::sym(uniquerow)) %>%
+    dplyr::distinct(n, .keep_all=TRUE) %>%
+    dplyr::mutate(perc = round((n / sum(n) * 100))) %>%
+    dplyr::arrange({{ uniquerow }}, {{ choice }}) %>%
+    dplyr::group_split() %>%
+    purrr::set_names(purrr::map(., ~ unique(as.character(.x[[rlang::as_string(uniquerow)]]))))
 
 
 
@@ -62,29 +63,29 @@ createSets <- function(.data, choice, attributes , uniquerow, prefix="a") {
 
 
     .data %>%
-      pivot_wider(
-        id_cols = c({{ uniquerow }}, everything()),
+      tidyr::pivot_wider(
+        id_cols = c({{ uniquerow }}, tidyselect::everything()),
         names_from = {{ choice }},
         values_from = c(n, perc),
         names_sep = "."
       )  %>%
-      select(- {{ uniquerow }}) %>%
-      rename_with(
+      dplyr::select(- {{ uniquerow }}) %>%
+      dplyr::rename_with(
         ~ gsub(paste0("^(", prefix, "(\\d+))_(.*)$"), "\\3.\\2", .),
-        matches(paste0("^", prefix, "\\d+_"))
+        dplyr::matches(paste0("^", prefix, "\\d+_"))
       ) %>%
-      pivot_longer(
-        cols = everything(),
+      tidyr::pivot_longer(
+        cols = tidyselect::everything(),
         names_to = c("name", "suffix"),
         names_pattern = "(.*)\\.(.*)"
       ) %>%
-      pivot_wider(
+      tidyr::pivot_wider(
         names_from = suffix,
         values_from = value
       )
   }
 
-  finalsets <- map(sets, ~makesets(.x ))
+  finalsets <- purrr::map(sets, ~makesets(.x ))
 
 
 
