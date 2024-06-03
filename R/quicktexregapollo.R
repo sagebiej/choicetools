@@ -26,7 +26,7 @@ quicktexregapollo <- function(model = model, wtpest = NULL, se="rob") {
     stop(" It seems you did not do bootstrapping. Thus, I cannot report bootstrapped se. The 'model' object must contain an element named 'bootse' when 'se' is 'bs'.")
   }
 
-  browser()
+
   modelOutput_settings = list(printPVal=T)
 
   if (is.null(wtpest)) {

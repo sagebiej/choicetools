@@ -3,4 +3,6 @@
 export("%>%")
 export(createSets)
 export(quicktexregapollo)
+export(remGOF)
+export(subcoef)
 importFrom(magrittr,"%>%")
