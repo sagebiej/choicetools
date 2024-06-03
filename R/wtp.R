@@ -17,14 +17,14 @@ wtp <- function(cost, attr, modelname, mediancost=FALSE) {
 
     deltaMethod_settings=list(expression=(temp=ex))
     #deltaMethod_settings=list(operation="ratio", parName1=a, parName2=cost)
-    wtp_values[which(attr==a),]<- apollo_deltaMethod(modelname, deltaMethod_settings)[,2:4]
+    wtp_values[which(attr==a),]<- apollo::apollo_deltaMethod(modelname, deltaMethod_settings)[,2:4]
   }
 
   #names(wtp_values) <- c("Expression" , "wtp" , "robse" , "robt")
   wtp_values$wtp <- wtp_values$wtp*-1
   wtp_values$robse <- wtp_values$robse*1
   wtp_values$robt <- wtp_values$robt*-1
-  wtp_values$pVal <- (1-pnorm((abs(wtp_values$robt))))*2
+  wtp_values$pVal <- (1-stats::pnorm((abs(wtp_values$robt))))*2
 
   rownames(wtp_values) <- attr
   return(wtp_values)

@@ -2,13 +2,14 @@
 
 ass_labels <- function(path, seelab=TRUE, lower=FALSE) {
 
-  labels <- read_excel(path = path, sheet = "dictionary", col_names = TRUE)[-2:-1,2:4]  %>% rename( "Variable"=1 ,   "Labels"=2   ,   "valuelabels"=3)
+  labels <- readxl::read_excel(path = path, sheet = "dictionary", col_names = TRUE)[-2:-1,2:4]  %>%
+    dplyr::rename( "Variable"=1 ,   "Labels"=2   ,   "valuelabels"=3)
 
 
   if (lower==TRUE) labels$Variable <- tolower(labels$Variable)
 
 
-  covdata <- read_excel(path = path)
+  covdata <- readxl::read_excel(path = path)
 
 
   ## check if variables are all present
@@ -30,12 +31,12 @@ ass_labels <- function(path, seelab=TRUE, lower=FALSE) {
   }
 
 
-  labels$Variable <- na.locf(labels$Variable)
+  labels$Variable <- zoo::na.locf(labels$Variable)
   labels <- labels[!is.na(labels$Labels),]
 
   X <- base::split(labels, labels$Variable)
 
-  Y=lapply(X, row_to_names , row_number = 1)
+  Y=lapply(X, janitor::row_to_names , row_number = 1)
 
 
   for (vn in names(covdata)) {
