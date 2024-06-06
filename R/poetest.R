@@ -14,7 +14,8 @@
 #' @export
 #'
 #' @examples \dontrun{
-#' poeresults<-poetest(n=5000, model1 = clmodels[[model_1]],model2 = clmodels[[model_2]], att=attr, price = "bcost")
+#' poeresults<-poetest(n=5000, model1 = clmodels[[model_1]],model2 = clmodels[[model_2]],
+#'  att=attr, price = "bcost")
 #' }
 
 
