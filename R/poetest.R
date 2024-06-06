@@ -1,4 +1,21 @@
+# This function lets us perform the Poe (2005) test on WTP values
 
+
+#' Perform the Poe (2005) test on different discrete choice models
+#'
+#' @param n number of draws
+#' @param model1 Model from which to take the first WTP values
+#' @param model2 Model from which to take the second WTP values
+#' @param att Vector of attributes whose WTP values you want to compare
+#' @param price nmae of the price coefficient
+#' 
+#'
+#' @return a p value associated with "WTP1>WTP2"
+#' @export
+#'
+#' @examples {
+#' poeresults<-poetest(n=5000, model1 = clmodels[[model_1]],model2 = clmodels[[model_2]], att=attr, price = "bcost")
+#' }
 
 ## Extract relevant elements of models
 
