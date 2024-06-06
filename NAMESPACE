@@ -2,8 +2,8 @@
 
 export("%>%")
 export(createSets)
+export(poetest)
 export(quicktexregapollo)
 export(remGOF)
 export(subcoef)
-export(takedraws)
 importFrom(magrittr,"%>%")
