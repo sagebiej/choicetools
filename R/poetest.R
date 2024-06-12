@@ -8,17 +8,21 @@
 #' @param model2 Model from which to take the second WTP values
 #' @param att Vector of attributes whose WTP values you want to compare
 #' @param price name of the price coefficient
-#' 
+#' @param vcov which variance-covariance matrix to use. Either normal for the normal one, or rob for the robust one.
 #'
 #' @return a p value associated with "WTP1>WTP2"
 #' @export
 #'
 #' @examples \dontrun{
 #' poeresults<-poetest(n=5000, model1 = clmodels[[model_1]],model2 = clmodels[[model_2]],
-#'  att=attr, price = "bcost")
+#'  att=attr, price = "bcost", vcov = "normal")
 #' }
-poetest <- function(n, model1, model2, att, price){
-
+poetest <- function(n, model1, model2, att, price, vcov){
+  
+  #stop command for invalid variance covariance matrix
+  if (!vcov %in% c("rob", "normal")) {
+    stop("Invalid value for 'vcov'. Please use one of 'rob' or 'normal'.")
+  }
   
   ## Extract relevant elements of models
   
@@ -41,7 +45,7 @@ poetest <- function(n, model1, model2, att, price){
     return(draw)
   }
   
-  getalldraws <- function(n, model1, model2, att, price) {
+  getalldraws <- function(n, model1, model2, att, price, vcov) {
     
     allmodels <- list(model1,model2)
     
@@ -49,7 +53,14 @@ poetest <- function(n, model1, model2, att, price){
     
     for (m in 1:2) {
       
-      model_draws[[m]] <-takedraws(n,allmodels[[m]][["estimate"]],allmodels[[m]][["varcov"]])
+      #implement the option to choose between the robust or the normal variance covariance matrix
+      varcov_matrix <- switch(vcov,
+                              rob = allmodels[[m]][["robvarcov"]],
+                              normal = allmodels[[m]][["varcov"]],
+                              stop("Invalid value for 'vcov'. Please use one of 'rob' or 'normal'.")
+      )
+      
+      model_draws[[m]] <-takedraws(n,allmodels[[m]][["estimate"]],varcov_matrix)
       
       model_draws[[m]] <-cbind(model_draws[[m]], wtp= model_draws[[m]][,att]/model_draws[[m]][,price])
     }
@@ -58,7 +69,7 @@ poetest <- function(n, model1, model2, att, price){
   }
   
   
-  draws<-getalldraws(n, model1, model2, att, price)
+  draws<-getalldraws(n, model1, model2, att, price, vcov)
 
   wtpvec <- cbind(wtp1= draws[[1]][,"wtp"], wtp2= draws[[2]][,"wtp"])
 

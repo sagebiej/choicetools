@@ -4,7 +4,7 @@
 \alias{poetest}
 \title{Perform the Poe (2005) test on different discrete choice models}
 \usage{
-poetest(n, model1, model2, att, price)
+poetest(n, model1, model2, att, price, vcov)
 }
 \arguments{
 \item{n}{number of draws}
@@ -16,6 +16,8 @@ poetest(n, model1, model2, att, price)
 \item{att}{Vector of attributes whose WTP values you want to compare}
 
 \item{price}{name of the price coefficient}
+
+\item{vcov}{which variance-covariance matrix to use. Either normal for the normal one, or rob for the robust one.}
 }
 \value{
 a p value associated with "WTP1>WTP2"
@@ -26,6 +28,6 @@ Perform the Poe (2005) test on different discrete choice models
 \examples{
 \dontrun{
 poeresults<-poetest(n=5000, model1 = clmodels[[model_1]],model2 = clmodels[[model_2]],
- att=attr, price = "bcost")
+ att=attr, price = "bcost", vcov = "normal")
 }
 }
