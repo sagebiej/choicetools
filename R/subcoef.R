@@ -22,7 +22,7 @@
 #' }
 subcoef <- function(condition, mname){
 
-  sub <- grep(condition,methods::slot(mname,"coef.names"))
+  sub <- grep(condition,methods::slot(mname,"coef.names"),perl = TRUE)
 
   for (ele in c("coef.names","coef","se","pvalues"))  {
     elements<- methods::slot(mname,ele)[sub]
