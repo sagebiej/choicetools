@@ -29,9 +29,9 @@ subcoef <- function(condition, mname){
     methods::slot(mname,ele) <- elements
   }
 
-  methods::slot(mname,"coef.names")<-gsub(pattern = condition,replacement = "",x =methods::slot(mname,"coef.names") )
+  methods::slot(mname,"coef.names")<-gsub(pattern = condition,replacement = "",x =methods::slot(mname,"coef.names") ,perl = TRUE )
 
-  methods::slot(mname,"model.name")<-gsub("_","",condition)
+  methods::slot(mname,"model.name")<-gsub("_","",condition, perl = TRUE)
 
 
   return(mname)
