@@ -17,10 +17,6 @@ quicktexregapollo <- function(model = model, wtpest = NULL, se="rob") {
     stop("Invalid value for 'se'. Please use one of 'rob', 'normal', or 'bs'.")
   }
 
- # if (!all(c("apollo", "maxLik", "maxim") %in% class(model))) {
- #   stop("Invalid model class. The model must be of classes 'apollo', 'maxLik', and 'maxim'.")
- # }
-
 
   if (se == "bs" && !"bootse" %in% names(model)) {
     stop(" It seems you did not do bootstrapping. Thus, I cannot report bootstrapped se. The 'model' object must contain an element named 'bootse' when 'se' is 'bs'.")
@@ -58,11 +54,6 @@ quicktexregapollo <- function(model = model, wtpest = NULL, se="rob") {
 
   }
 
-
-
-
-
-  coefnames <- gsub(pattern = "_[a-z]$", "" ,rownames(estimated))
 
   texout <- texreg::createTexreg(coef.names = coefnames , coef = estimated[["estimate"]] , se = estimated[["se"]] , pvalues = estimated$pv,
                          gof.names = c("No Observations" , "No Respondents" , "Log Likelihood (Null)" , "Log Likelihood (Converged)") ,
