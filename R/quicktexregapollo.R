@@ -54,7 +54,8 @@ quicktexregapollo <- function(model = model, wtpest = NULL, se="rob") {
 
   }
 
-
+  coefnames <- rownames(estimated)
+  
   texout <- texreg::createTexreg(coef.names = coefnames , coef = estimated[["estimate"]] , se = estimated[["se"]] , pvalues = estimated$pv,
                          gof.names = c("No Observations" , "No Respondents" , "Log Likelihood (Null)" , "Log Likelihood (Converged)") ,
                          gof = c(model[["nObsTot"]] , model[["nIndivs"]], model[["LL0"]][[1]] , model[["LLout"]][[1]] ) ,
