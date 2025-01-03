@@ -39,14 +39,14 @@ It contains the following functions:
 You can install the stable version of choiceTools like so:
 
 ``` r
-devtools::install_git('https://git.idiv.de/dj44vuri/choicetools')
+devtools::install_git('https://github.com/sagebiej/choicetools')
 ```
 
 
 You can install the development version of choiceTools like so:
 
 ``` r
-devtools::install_git('https://git.idiv.de/dj44vuri/choicetools', ref = "devel" )
+devtools::install_git('https://github.com/sagebiej/choicetools', ref = "devel" )
 ```
 
 ## Example
