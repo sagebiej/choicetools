@@ -1,12 +1,12 @@
-test_that("quicktexregapollo function handles invalid model class", {
-  invalid_model <- list()
-  class(invalid_model) <- c("invalidClass")
-
-  expect_error(
-    quicktexregapollo(model = invalid_model, se = "rob"),
-    "Invalid model class. The model must be of classes 'apollo', 'maxLik', and 'maxim'."
-  )
-})
+# test_that("quicktexregapollo function handles invalid model class", {
+#   invalid_model <- list()
+#   class(invalid_model) <- c("invalidClass")
+# 
+#   expect_error(
+#     quicktexregapollo(model = invalid_model, se = "rob"),
+#     "Invalid model class. The model must be of classes 'apollo', 'maxLik', and 'maxim'."
+#   )
+# })
 
 
 

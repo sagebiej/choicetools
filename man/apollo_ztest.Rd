@@ -20,5 +20,7 @@ a dataframe with the test statistics
 Use this test if you estimate the exact same model with different data sets. For example, if you have a split sample and want to compare the two samples for differences in preferences. The test is especially useful for models in WTP Space where the Poe Test ist not adequate.
 }
 \examples{
-\dontrun apollo_ztest(model1,model2)
+\dontrun{
+ apollo_ztest(model1,model2)
+ }
 }
