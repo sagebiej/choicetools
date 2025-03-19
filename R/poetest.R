@@ -26,24 +26,7 @@ poetest <- function(n, model1, model2, att, price, vcov){
   
   ## Extract relevant elements of models
   
-  takedraws <-function(n=10000, beta,vc) {
-    
-    
-    k=length(beta)
-    cholesky = chol(vc)
-    
-    draw=matrix(nrow = n, ncol=k)
-    
-    colnames(draw) <-names(beta)
-    
-    for (d in 1:n) {
-      draw[d,] <- beta +t(cholesky)%*%stats::rnorm(k)
-    }
-    
-    
-    
-    return(draw)
-  }
+
   
   getalldraws <- function(n, model1, model2, att, price, vcov) {
     
