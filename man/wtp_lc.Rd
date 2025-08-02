@@ -24,7 +24,7 @@ A named list. Each element (e.g. `Class 1`, `Class 2`, ...) is a `data.frame` co
 This function wraps the [wtp()] function to compute WTP estimates across all classes of a latent class (LC) model estimated with the Apollo package.
 }
 \examples{
-\donttest{
+\dontrun{
   # Estimate your LC model first
   mod <- apollo_estimate(...)
   # Compute WTP using default cost stub, excluding "delta_" suffix

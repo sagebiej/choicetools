@@ -15,7 +15,7 @@
 #' @seealso [wtp()], [apollo::apollo_modelOutput()]
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #'   # Estimate your LC model first
 #'   mod <- apollo_estimate(...)
 #'   # Compute WTP using default cost stub, excluding "delta_" suffix
