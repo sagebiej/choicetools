@@ -64,7 +64,7 @@ wtp <- function(cost, attr, modelname, mediancost = FALSE) {
   # assign row names and adjust signs
   rownames(wtp_values) <- attr_names
   wtp_values$wtp <- -wtp_values$wtp
-  n  wtp_values$pVal <- 2 * (1 - stats::pnorm(abs(wtp_values$robt)))
+  wtp_values$pVal <- 2 * (1 - stats::pnorm(abs(wtp_values$robt)))
   
   return(wtp_values)
 }
