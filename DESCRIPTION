@@ -1,7 +1,7 @@
 Package: choiceTools
 Type: Package
 Title: Various tools to work with choice experiment data in R
-Version: 0.6.0
+Version: 0.6.0.9000
 Author: Julian Sagebiel
 Maintainer: Julian Sagebiel <julian.sagebiel@idiv.de>
 Description: This is a random set of functions that make your life as a choice modeller easier. Some functions are made for use with apollo so that you can more easily do choice modelling in apollo. The package includes some tests like Poetest and zTest and some functions to generate publication-ready tables.
