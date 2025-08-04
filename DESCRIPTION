@@ -17,6 +17,7 @@ VignetteBuilder: knitr
 Imports: 
     apollo,
     dplyr,
+    gtools,
     janitor,
     magrittr,
     methods,
