@@ -16,43 +16,39 @@
 #'
 #' @examples
 #' \dontrun{
-#'   # Estimate your LC model first
-#'   mod <- apollo_estimate(...)
-#'   # Compute WTP using default cost stub, excluding "delta_" suffix
-#'   results <- wtp_lc(mod, "cost_")
-#'   # Compute WTP using a price stub and custom exclusion
-#'   results2 <- wtp_lc(mod, "b_price_", excludestub = "delta_")
+#' # Estimate your LC model first
+#' mod <- apollo_estimate(...)
+#' # Compute WTP using default cost stub, excluding "delta_" suffix
+#' results <- wtp_lc(mod, "cost_")
+#' # Compute WTP using a price stub and custom exclusion
+#' results2 <- wtp_lc(mod, "b_price_", excludestub = "delta_")
 #' }
 #'
 #' @export
 
-wtp_lc <-function(modelname, pricestub, excludestub = "delta") {
+wtp_lc <- function(modelname, pricestub, excludestub = "delta") {
+  wtpvalues <- list()
 
-
-  wtpvalues=list()
-
-  for (class in 1:(length(modelname$LL0)-1)) {
-
-
-    clet <- intToUtf8(96+class)
-    coefs<- data.frame(apollo::apollo_modelOutput(modelname, modelOutput_settings = list(printPVal=T)))
-    coefs<- coefs[grep(paste0(excludestub, ".*", clet,"$"),x = rownames(coefs), value=TRUE, perl = TRUE), c(1,5:7)]
+  for (class in 1:(length(modelname$LL0) - 1)) {
+    clet <- intToUtf8(96 + class)
+    coefs <- data.frame(apollo::apollo_modelOutput(modelname, modelOutput_settings = list(printPVal = T)))
+    coefs <- coefs[grep(paste0(excludestub, ".*", clet, "$"), x = rownames(coefs), value = TRUE, perl = TRUE), c(1, 5:7)]
 
 
 
 
     print(clet)
 
-    wtpvalues[[paste0("Class ",class)]] <-
-      wtp(paste0(pricestub,clet),
-          grep(paste0("^(?=.*_",clet,"$)(?!.*",excludestub,")"), names(modelname$estimate) , value=T, perl = TRUE),modelname = modelname)
+    wtpvalues[[paste0("Class ", class)]] <-
+      wtp(paste0(pricestub, clet),
+        grep(paste0("^(?=.*_", clet, "$)(?!.*", excludestub, ")"), names(modelname$estimate), value = T, perl = TRUE),
+        modelname = modelname
+      )
 
-    colnames(coefs)<- colnames(wtpvalues[[paste0("Class ",class)]])
+    colnames(coefs) <- colnames(wtpvalues[[paste0("Class ", class)]])
 
-    wtpvalues[[paste0("Class ",class)]] <- rbind(wtpvalues[[paste0("Class ",class)]],coefs)
-
+    wtpvalues[[paste0("Class ", class)]] <- rbind(wtpvalues[[paste0("Class ", class)]], coefs)
   }
 
   return(wtpvalues)
-
 }

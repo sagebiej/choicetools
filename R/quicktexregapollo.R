@@ -10,9 +10,10 @@
 #' @return a list object to be easily used in texreg. It makes it easy to create tables usind different standard errors (including robust and bootstrapped) and to display WTP instead of beta coefficients.
 #' @export
 #'
-#' @examples \dontrun{quicktexregapollo(model1)}
-quicktexregapollo <- function(model = model, wtpest = NULL, se="rob") {
-
+#' @examples \dontrun{
+#' quicktexregapollo(model1)
+#' }
+quicktexregapollo <- function(model = model, wtpest = NULL, se = "rob") {
   if (!se %in% c("rob", "normal", "bs")) {
     stop("Invalid value for 'se'. Please use one of 'rob', 'normal', or 'bs'.")
   }
@@ -23,46 +24,42 @@ quicktexregapollo <- function(model = model, wtpest = NULL, se="rob") {
   }
 
 
-  modelOutput_settings = list(printPVal=T)
+  modelOutput_settings <- list(printPVal = T)
 
   if (is.null(wtpest)) {
-
     estimated <- janitor::clean_names(as.data.frame(apollo::apollo_modelOutput(model, modelOutput_settings)))
     switch(se,
-           rob = { estimated$se <- estimated$rob_s_e
-           estimated$pv <- estimated$p_1_sided_2
-           },
-           bs = {
-             estimated$se <- estimated$bootstrap_s_e
-             estimated$pv <- estimated$p_1_sided_3
-           },
-           normal = {
-             estimated$se <- estimated$s_e
-             estimated$pv <- estimated$p_1_sided
-
-           },
-           {
-             # Default case if no match is found
-             stop("Invalid value for 'se'. Please use a valid value.")
-           }
+      rob = {
+        estimated$se <- estimated$rob_s_e
+        estimated$pv <- estimated$p_1_sided_2
+      },
+      bs = {
+        estimated$se <- estimated$bootstrap_s_e
+        estimated$pv <- estimated$p_1_sided_3
+      },
+      normal = {
+        estimated$se <- estimated$s_e
+        estimated$pv <- estimated$p_1_sided
+      },
+      {
+        # Default case if no match is found
+        stop("Invalid value for 'se'. Please use a valid value.")
+      }
     )
-
-
-    } else{
+  } else {
     estimated <- wtpest
-    colnames(estimated)<- c("estimate", "rob_s_e", "robt", "p_1_sided_2")
-
+    colnames(estimated) <- c("estimate", "rob_s_e", "robt", "p_1_sided_2")
   }
 
   coefnames <- rownames(estimated)
-  
-  texout <- texreg::createTexreg(coef.names = coefnames , coef = estimated[["estimate"]] , se = estimated[["se"]] , pvalues = estimated$pv,
-                         gof.names = c("No Observations" , "No Respondents" , "Log Likelihood (Null)" , "Log Likelihood (Converged)") ,
-                         gof = c(model[["nObsTot"]] , model[["nIndivs"]], model[["LL0"]][[1]] , model[["LLout"]][[1]] ) ,
-                         gof.decimal = c(FALSE,FALSE,TRUE,TRUE)
+
+  texout <- texreg::createTexreg(
+    coef.names = coefnames, coef = estimated[["estimate"]], se = estimated[["se"]], pvalues = estimated$pv,
+    gof.names = c("No Observations", "No Respondents", "Log Likelihood (Null)", "Log Likelihood (Converged)"),
+    gof = c(model[["nObsTot"]], model[["nIndivs"]], model[["LL0"]][[1]], model[["LLout"]][[1]]),
+    gof.decimal = c(FALSE, FALSE, TRUE, TRUE)
   )
 
 
   return(texout)
-
 }

@@ -18,23 +18,21 @@
 #' head(draws)
 #'
 #' @export
-takedraws <-function(n=10000, beta,vc) {
-  
-  
+takedraws <- function(n = 10000, beta, vc) {
   # Ensure beta is a column vector
   k <- length(beta)
-  
+
   # Cholesky decomposition
-  cholesky <- chol(vc)  # Decomposes vc into L such that L %*% t(L) = vc
-  
+  cholesky <- chol(vc) # Decomposes vc into L such that L %*% t(L) = vc
+
   # Generate standard normal random variables in one step
   z <- matrix(rnorm(n * k), nrow = k, ncol = n)
-  
+
   # Transform using Cholesky decomposition (vectorized)
   draws <- t(beta + t(cholesky) %*% z)
-  
+
   # Set column names
   colnames(draws) <- names(beta)
-  
+
   return(draws)
 }
