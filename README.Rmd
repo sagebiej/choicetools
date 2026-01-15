@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: end -->
 
-The package contains some files that may make your live as a choice modeller easier, especially if you use the r package `apollo`.
+The package contains some files that may make your life as a choice modeller easier, especially if you use the r package `apollo`.
 
 It contains the following functions:
 
@@ -29,7 +29,7 @@ It contains the following functions:
 
 -   apollo_ztest: Conduct a z test for all parameters between two models estimated with apollo in one line
 
--   quicktexregapollo: If you want to create publication-ready tables with texreg, this function transform an apollo object into a texreg object
+-   quicktexregapollo: If you want to create publication-ready tables with texreg, this function transforms an apollo object into a texreg object
 
 -    subcoef and remGOF: make it easy to split your model parameters so that you can create publication-ready tables where columns represent different sets of estimated parameters from one model rather than all parameters in one row.
 
