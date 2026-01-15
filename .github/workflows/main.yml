@@ -28,10 +28,11 @@ jobs:
           rmarkdown::render("README.Rmd", output_format = "github_document")
         shell: Rscript {0}
 
-      - name: Commit README.md
-        run: |
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Actions"
-          git add README.md
-          git commit -m "Re-render README.md" || echo "No changes"
-          git push
+- name: Commit README.md
+  run: |
+    git config --local user.email "actions@github.com"
+    git config --local user.name "GitHub Actions"
+    git add README.md
+    git commit -m "Re-render README.md" || echo "No changes"
+    git push https://github-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:${{ github.ref }}
+
