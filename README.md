@@ -6,7 +6,7 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The package contains some files that may make your live as a choice
+The package contains some files that may make your life as a choice
 modeller easier, especially if you use the r package `apollo`.
 
 It contains the following functions:
@@ -26,7 +26,7 @@ It contains the following functions:
   estimated with apollo in one line
 
 - quicktexregapollo: If you want to create publication-ready tables with
-  texreg, this function transform an apollo object into a texreg object
+  texreg, this function transforms an apollo object into a texreg object
 
 - subcoef and remGOF: make it easy to split your model parameters so
   that you can create publication-ready tables where columns represent
@@ -40,21 +40,3 @@ You can install the stable version of choiceTools like so:
 ``` r
 devtools::install_git('https://github.com/sagebiej/choicetools')
 ```
-
-You can install the development version of choiceTools like so:
-
-``` r
-devtools::install_git('https://github.com/sagebiej/choicetools', ref = "devel" )
-```
-
-## Example
-
-This is a basic example which shows you how to solve a common problem:
-
-``` r
-library(choiceTools)
-## basic example code
-```
-
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this.
